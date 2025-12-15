@@ -17,15 +17,20 @@ public class Admin extends javax.swing.JFrame {
     /**
      * Creates new form Admin
      */
+    // Declaring variables
     private Login login;
     private CardLayout cardLayout;
+    
+    // Constructor of the admin class
     public Admin(Login login) {
+        // initializing parameters
         this.login = login;
         initComponents();
-
+        // Setting up card layout
         jPanel3.setLayout(new java.awt.CardLayout());
         cardLayout = (CardLayout) jPanel3.getLayout();
         
+        // Adding panels in the card layouy
         jPanel3.add(Dashboard, "Dashboard");
         jPanel3.add(viewProduct, "viewProduct");
         jPanel3.add(addProduct, "addProduct");
@@ -819,7 +824,9 @@ public class Admin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+// changing the panels on the button click
+    
     private void sellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellActionPerformed
         cardLayout.show(jPanel3, "sellProduct");// TODO add your handling code here:
     }//GEN-LAST:event_sellActionPerformed
@@ -837,7 +844,7 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_addActionPerformed
 
     private void logOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutActionPerformed
-
+        // Operations that will take place after clicking log out button
         this.setVisible(false);
         login.setVisible(true);
                 // TODO add your handling code here:

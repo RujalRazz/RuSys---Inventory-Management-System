@@ -17,15 +17,20 @@ public class User extends javax.swing.JFrame {
     /**
      * Creates new form User
      */
+    // Declaring variables and initializing them
     private Login login;
     private CardLayout cardLayout;
+    
+    // Constructor for the user class
     public User(Login login) {
+        // initializing parameters
         this.login = login;
         initComponents();
-        
+        // Setting up card layout
         jPanel2.setLayout(new java.awt.CardLayout());
         cardLayout = (CardLayout) jPanel2.getLayout();
  
+        // adding panels in the card layout
         jPanel2.add(viewProduct, "viewProduct");
         jPanel2.add(cart, "cart");
         cardLayout.show(jPanel2, "viewProduct");
@@ -452,12 +457,15 @@ public class User extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    // Adding action listerns to the navigation button so that desired panel is opened
+    
     private void myCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myCartActionPerformed
        cardLayout.show(jPanel2, "cart");// TODO add your handling code here:
     }//GEN-LAST:event_myCartActionPerformed
 
     private void logOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutActionPerformed
+       // log out button function
        login.setVisible(true);
        this.setVisible(false); // TODO add your handling code here:
     }//GEN-LAST:event_logOutActionPerformed

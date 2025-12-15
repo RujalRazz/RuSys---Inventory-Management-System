@@ -19,6 +19,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    
     public Login() {
         initComponents();
     }
@@ -166,20 +167,24 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordActionPerformed
     
     private void loginSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginSubmitActionPerformed
+        // Declaring variables and initializing them with the value of jTextField
         String userName = username.getText();
         String pass = new String(password.getPassword());
         
+        // Comparing to see whether the text field is empty or not
         if(userName.equalsIgnoreCase("") || pass.equals("")){
             JOptionPane.showMessageDialog(this,
                 "Please fill all fields.",
                 "Warning",
             JOptionPane.WARNING_MESSAGE);
         }
+        // admin credentials 
         else if(userName.equalsIgnoreCase("admin") && pass.equals("admin")){
                Admin admin = new Admin(this);
                admin.setVisible(true);
                this.setVisible(false);
     }
+        // users credentials
         else{
             User user = new User(this);
             user.setVisible(true);
@@ -191,6 +196,7 @@ public class Login extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        // making the login page visible for the user
         Login login = new Login();
         login.setVisible(true);
     }
