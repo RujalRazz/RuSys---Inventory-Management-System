@@ -98,7 +98,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Helvetica Neue", 0, 48)); // NOI18N
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/vecteezy-warehouse-workers-effic.png"))); // NOI18N
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 220, 140));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 230, 170));
 
         jPanel2.setBackground(new java.awt.Color(143, 1, 119));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
