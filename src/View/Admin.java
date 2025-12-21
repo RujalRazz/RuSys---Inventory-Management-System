@@ -167,7 +167,7 @@ public class Admin extends javax.swing.JFrame {
         jPanel1.add(sell, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 140, 40));
 
         dashboard.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        dashboard.setText("Dashboard");
+        dashboard.setText("🖥 Dashboard");
         dashboard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dashboardActionPerformed(evt);
@@ -212,10 +212,10 @@ public class Admin extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(217, 217, 217)
                 .addComponent(jLabel1)
-                .addGap(185, 185, 185))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

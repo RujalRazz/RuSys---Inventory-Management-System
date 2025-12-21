@@ -11,5 +11,8 @@ package Model;
 import java.util.LinkedList;
 public class ProductStore {
     private LinkedList<Product> products = new LinkedList<>();
+    public ProductStore(){
+        
+    }
     
 }

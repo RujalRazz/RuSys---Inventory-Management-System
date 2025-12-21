@@ -119,7 +119,7 @@ public class User extends javax.swing.JFrame {
             }
         });
 
-        myCart.setText("My Cart");
+        myCart.setText("🛒 My Cart");
         myCart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 myCartActionPerformed(evt);
