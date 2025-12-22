@@ -9,6 +9,8 @@ package Model;
  * @author ruzalrajopadhyay
  */
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 public class ProductStored {
     private ArrayList<Product> products;
     public ProductStored(){
@@ -21,4 +23,24 @@ public class ProductStored {
         return products;
     }
     
+    public void populatingTable(JTable table, java.util.List<Product> display){
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        
+        model.setRowCount(0);
+        if(display == null){
+            return;
+        }
+        for(int i = 0; i < display.size(); i++){
+            Product p = display.get(i);
+            Object[] row = {
+                p.getProductId(),
+                p.getProductName(),
+                p.getCategory(),
+                p.getQuantity(),
+                p.getPrice(),
+                p.getExpiryDate()
+            };
+            model.addRow(row);
+        }
+    }
 }

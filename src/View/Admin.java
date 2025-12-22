@@ -10,6 +10,9 @@ package View;
  */
 import java.awt.*;
 import javax.swing.*;
+import Model.Product;
+import Model.ProductStored;
+import Model.CategoryStored;
 public class Admin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Admin.class.getName());
@@ -20,6 +23,8 @@ public class Admin extends javax.swing.JFrame {
     // Declaring variables
     private Login login;
     private CardLayout cardLayout;
+    ProductStored productStored = new ProductStored();
+    CategoryStored categoryStored = new CategoryStored();
     
     // Constructor of the admin class
     public Admin(Login login) {
@@ -27,6 +32,7 @@ public class Admin extends javax.swing.JFrame {
         this.login = login;
         initComponents();
         // Setting up card layout
+        productStored.populatingTable(productListTable, productStored.getAllProducts());
         jPanel3.setLayout(new java.awt.CardLayout());
         cardLayout = (CardLayout) jPanel3.getLayout();
         
@@ -82,7 +88,7 @@ public class Admin extends javax.swing.JFrame {
         idButton = new javax.swing.JButton();
         nameButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        productListTable = new javax.swing.JTable();
         addProduct = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -96,7 +102,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         quantity = new javax.swing.JTextField();
-        price = new javax.swing.JTextField();
+        priceStr = new javax.swing.JTextField();
         category = new javax.swing.JComboBox<>();
         day = new javax.swing.JComboBox<>();
         month = new javax.swing.JComboBox<>();
@@ -419,7 +425,7 @@ public class Admin extends javax.swing.JFrame {
 
         nameButton.setText("Search");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        productListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -430,7 +436,7 @@ public class Admin extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(productListTable);
 
         javax.swing.GroupLayout viewProductLayout = new javax.swing.GroupLayout(viewProduct);
         viewProduct.setLayout(viewProductLayout);
@@ -570,7 +576,7 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(productName, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(productId, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(price, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(priceStr, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(quantity, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(category, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(0, 46, Short.MAX_VALUE))
@@ -602,7 +608,7 @@ public class Admin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel17)
-                            .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(priceStr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel18)
@@ -613,6 +619,11 @@ public class Admin extends javax.swing.JFrame {
         );
 
         uploadBtn.setText("Upload");
+        uploadBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uploadBtnActionPerformed(evt);
+            }
+        });
 
         clearBtn.setText("Clear");
 
@@ -886,6 +897,16 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_totalPriceActionPerformed
 
+    private void uploadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadBtnActionPerformed
+        try{
+            String id = productId.getText();
+            String name = productName.getText();
+            String ctg = category.getSelectedItem().toString();
+            int qty = Integer.parseInt(quantity.getText());
+            double price = Double.parseDouble(priceStr.getText());
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_uploadBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -949,14 +970,14 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JButton logOut;
     private javax.swing.JComboBox<String> month;
     private javax.swing.JButton nameButton;
-    private javax.swing.JTextField price;
+    private javax.swing.JTextField priceStr;
     private javax.swing.JTextField productID;
     private javax.swing.JTextField productId;
+    private javax.swing.JTable productListTable;
     private javax.swing.JTextField productName;
     private javax.swing.JTextField productName2;
     private javax.swing.JPanel productNum;
