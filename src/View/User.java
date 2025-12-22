@@ -10,6 +10,9 @@ package View;
  */
 import java.awt.*;
 import javax.swing.*;
+import Model.ProductStored;
+import Model.CategoryStored;
+import static View.Admin.productStored;
 public class User extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(User.class.getName());
@@ -20,13 +23,16 @@ public class User extends javax.swing.JFrame {
     // Declaring variables and initializing them
     private Login login;
     private CardLayout cardLayout;
-    
+    ProductStored productStored = Admin.productStored;
+    CategoryStored categoryStored = Admin.categoryStored;
     // Constructor for the user class
     public User(Login login) {
         // initializing parameters
         this.login = login;
         initComponents();
         // Setting up card layout
+        
+        productStored.refreshTable(productList);
         jPanel2.setLayout(new java.awt.CardLayout());
         cardLayout = (CardLayout) jPanel2.getLayout();
  

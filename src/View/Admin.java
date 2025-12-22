@@ -79,7 +79,7 @@ public class Admin extends javax.swing.JFrame {
         sell = new javax.swing.JButton();
         dashboard = new javax.swing.JButton();
         view = new javax.swing.JButton();
-        add = new javax.swing.JButton();
+        update = new javax.swing.JButton();
         logOut = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         Dashboard = new javax.swing.JPanel();
@@ -129,7 +129,6 @@ public class Admin extends javax.swing.JFrame {
         productId = new javax.swing.JTextField();
         productName = new javax.swing.JTextField();
         uploadBtn = new javax.swing.JButton();
-        clearBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
         sellProduct = new javax.swing.JPanel();
@@ -209,13 +208,13 @@ public class Admin extends javax.swing.JFrame {
         });
         jPanel1.add(view, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 140, 40));
 
-        add.setText("Add Product");
-        add.addActionListener(new java.awt.event.ActionListener() {
+        update.setText("Update System");
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addActionPerformed(evt);
+                updateActionPerformed(evt);
             }
         });
-        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 140, 40));
+        jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 140, 40));
 
         logOut.setText("Log Out");
         logOut.addActionListener(new java.awt.event.ActionListener() {
@@ -509,16 +508,16 @@ public class Admin extends javax.swing.JFrame {
         addProduct.setBackground(new java.awt.Color(143, 1, 119));
 
         jLabel11.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 36)); // NOI18N
-        jLabel11.setText("Add Product To System");
+        jLabel11.setText("Update System");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(161, 161, 161)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(239, 239, 239))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -659,11 +658,19 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
-        clearBtn.setText("Clear");
-
         updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout addProductLayout = new javax.swing.GroupLayout(addProduct);
         addProduct.setLayout(addProductLayout);
@@ -672,20 +679,16 @@ public class Admin extends javax.swing.JFrame {
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(addProductLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(addProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(addProductLayout.createSequentialGroup()
-                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(addProductLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(addProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(uploadBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
-                        .addGroup(addProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(addProductLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(uploadBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(136, 136, 136)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75))
         );
         addProductLayout.setVerticalGroup(
             addProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -693,15 +696,12 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(55, 55, 55)
                 .addGroup(addProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(uploadBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(addProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31))
+                    .addComponent(uploadBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         jPanel3.add(addProduct, "card4");
@@ -900,11 +900,11 @@ public class Admin extends javax.swing.JFrame {
         cardLayout.show(jPanel3, "viewProduct");// TODO add your handling code here:
     }//GEN-LAST:event_viewActionPerformed
 
-    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         cardLayout.show(jPanel3, "addProduct");
         updateExpiry();
 // TODO add your handling code here:
-    }//GEN-LAST:event_addActionPerformed
+    }//GEN-LAST:event_updateActionPerformed
 
     private void logOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutActionPerformed
         // Operations that will take place after clicking log out button
@@ -978,6 +978,72 @@ public class Admin extends javax.swing.JFrame {
             updateExpiry();  // TODO add your handling code here:
     }//GEN-LAST:event_categoryItemStateChanged
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        String id = productId.getText().trim();
+        
+        if(id.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please make sure you have entered Id", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int confirmation = JOptionPane.showConfirmDialog(this, "This process cannot be undone, Are you sure?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if(confirmation == JOptionPane.YES_OPTION){
+            boolean isDeleted = productStored.deleteProduct(id);
+            if(isDeleted){
+                JOptionPane.showMessageDialog(this, "Product Successfully deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                productStored.refreshTable(productListTable);
+                productId.setText("");
+                productName.setText("");
+                quantity.setText("");
+                priceStr.setText("");
+        }
+            else{
+                JOptionPane.showMessageDialog(this, "Please enter correct product id", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        
+        
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        
+            String id = productId.getText().trim();
+            
+            
+            if(id.isEmpty() || quantity.getText().isEmpty() || priceStr.getText().isEmpty() ){
+                JOptionPane.showMessageDialog(this, "Please make sure you have entered details to update", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try{
+                int qty = Integer.parseInt(quantity.getText().trim());
+                double price = Double.parseDouble(priceStr.getText().trim());
+            
+            
+                int confirmation = JOptionPane.showConfirmDialog(this, "Only the quantity and price of the product will change.", "Confirm Update", JOptionPane.YES_NO_OPTION);
+                if(confirmation == JOptionPane.YES_OPTION){
+                    boolean updated = productStored.updateProduct(id, qty, price);
+                    if(updated){
+                        JOptionPane.showMessageDialog(this, "Product Successfully Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        productStored.refreshTable(productListTable);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, "Please enter correct product id", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+                
+            
+        }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Make sure the price and quantity are numeric", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -988,11 +1054,9 @@ public class Admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Dashboard;
     private javax.swing.JButton Sell;
-    private javax.swing.JButton add;
     private javax.swing.JPanel addProduct;
     private javax.swing.JComboBox<String> category;
     private javax.swing.JButton clear;
-    private javax.swing.JButton clearBtn;
     private javax.swing.JComboBox<String> comboDay;
     private javax.swing.JComboBox<String> comboMonth;
     private javax.swing.JComboBox<String> comboYear;
@@ -1061,6 +1125,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JPanel sellProduct;
     private javax.swing.JComboBox<String> sortBy;
     private javax.swing.JTextField totalPrice;
+    private javax.swing.JButton update;
     private javax.swing.JButton updateBtn;
     private javax.swing.JButton uploadBtn;
     private javax.swing.JButton view;

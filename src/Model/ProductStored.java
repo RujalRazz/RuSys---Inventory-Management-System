@@ -46,4 +46,30 @@ public class ProductStored {
     public void refreshTable(JTable table){
         populatingTable(table, getAllProducts());
     }
+    public Product searchById(String id){
+        for(Product p: products){
+            if(p.getProductId().equalsIgnoreCase(id)){
+                return p;
+            }
+        }
+        return null;
+    }
+    public boolean deleteProduct(String id){
+        for(int i = 0; i < products.size(); i++){
+            if(products.get(i).getProductId().equalsIgnoreCase(id)){
+                products.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean updateProduct(String id, int newQuantity, double newPrice){
+        Product p = searchById(id);
+        if(p != null){
+            p.setPrice(newPrice);
+            p.setQuantity(newQuantity);
+            return true;
+        }
+        return false;
+    }
 }
