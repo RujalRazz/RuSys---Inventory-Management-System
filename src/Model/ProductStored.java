@@ -43,4 +43,7 @@ public class ProductStored {
             model.addRow(row);
         }
     }
+    public void refreshTable(JTable table){
+        populatingTable(table, getAllProducts());
+    }
 }
