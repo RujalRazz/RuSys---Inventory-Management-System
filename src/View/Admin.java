@@ -929,8 +929,26 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Make sure you entered correct Id", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Product result  = Controller.Search.binarySearchId(productStored.getAllProducts(), id);
-        
+        Product found  = Controller.Search.binarySearchId(productStored.getAllProducts(), id);
+        if(found != null){
+            String message = String.format("Product Information: \n"
+                    + "ID: %s\n"
+                    + "Name: %s\n"
+                    + "Category: %s\n"
+                    + "Quantity in Stock: %d\n"
+                    + "Price: $%.2f \n"
+                    + "Expiry Date: %s",
+                    found.getProductId(),
+                    found.getProductName(),
+                    found.getCategory(),
+                    found.getQuantity(),
+                    found.getPrice(),
+                    found.getExpiryDate());
+            JOptionPane.showMessageDialog(this, message, "Product Details", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Product not Found", "No match found", JOptionPane.ERROR_MESSAGE);
+        }
     
 
 

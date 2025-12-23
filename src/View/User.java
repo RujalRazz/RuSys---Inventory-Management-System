@@ -12,6 +12,8 @@ import java.awt.*;
 import javax.swing.*;
 import Model.ProductStored;
 import Model.CategoryStored;
+import Model.Product;
+import Controller.Search;
 import static View.Admin.productStored;
 public class User extends javax.swing.JFrame {
     
@@ -209,6 +211,11 @@ public class User extends javax.swing.JFrame {
         productSearch.setText("jTextField1");
 
         idSearchbtn.setText("Search");
+        idSearchbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idSearchbtnActionPerformed(evt);
+            }
+        });
 
         productSearchbtn.setText("Search");
 
@@ -479,6 +486,37 @@ public class User extends javax.swing.JFrame {
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
         cardLayout.show(jPanel2, "viewProduct");        // TODO add your handling code here:
     }//GEN-LAST:event_viewActionPerformed
+
+    private void idSearchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idSearchbtnActionPerformed
+        String id = idSearch.getText().trim();
+        
+        if(id.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Make sure you entered correct Id", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Product found  = Controller.Search.binarySearchId(productStored.getAllProducts(), id);
+        if(found != null){
+            String message = String.format("Product Information: \n"
+                    + "ID: %s\n"
+                    + "Name: %s\n"
+                    + "Category: %s\n"
+                    + "Quantity in Stock: %d\n"
+                    + "Price: $%.2f \n"
+                    + "Expiry Date: %s",
+                    found.getProductId(),
+                    found.getProductName(),
+                    found.getCategory(),
+                    found.getQuantity(),
+                    found.getPrice(),
+                    found.getExpiryDate());
+            JOptionPane.showMessageDialog(this, message, "Product Details", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Product not Found", "No match found", JOptionPane.ERROR_MESSAGE);
+        }
+    
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idSearchbtnActionPerformed
 
     /**
      * @param args the command line arguments
