@@ -14,6 +14,7 @@ import Model.Product;
 import Model.ProductStored;
 import Model.CategoryStored;
 import java.time.LocalDate;
+import Controller.Search;
 public class Admin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Admin.class.getName());
@@ -684,9 +685,9 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(addProductLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(uploadBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(123, 123, 123)
                 .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(136, 136, 136)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(75, 75, 75))
         );
@@ -922,6 +923,17 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_searchNameActionPerformed
 
     private void idButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idButtonActionPerformed
+        String id = idSearch.getText().trim();
+        
+        if(id.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Make sure you entered correct Id", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Product result  = Controller.Search.binarySearchId(productStored.getAllProducts(), id);
+        
+    
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_idButtonActionPerformed
 
