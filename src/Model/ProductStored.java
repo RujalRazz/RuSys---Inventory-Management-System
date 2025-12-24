@@ -23,7 +23,7 @@ public class ProductStored {
         return products;
     }
     
-    public void populatingTable(JTable table, java.util.List<Product> display){
+    public void populatingTable(JTable table, ArrayList<Product> display){
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         
         model.setRowCount(0);
