@@ -8,6 +8,13 @@ package Controller;
  *
  * @author ruzalrajopadhyay
  */
+import java.util.ArrayList;
+import Model.Product;
 public class Sorting {
-    
+    public static void selectionSortId(ArrayList<Product> products){
+          if (products == null || products.size() < 2){
+              
+          }  
+        
+    }
 }
