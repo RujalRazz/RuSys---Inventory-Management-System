@@ -9,12 +9,15 @@ package View;
  * @author ruzalrajopadhyay
  */
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import Model.Product;
 import Model.ProductStored;
 import Model.CategoryStored;
 import java.time.LocalDate;
 import Controller.Search;
+import Controller.Sorting;
+import Model.RecentlyAddedQueue;
 public class Admin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Admin.class.getName());
@@ -34,6 +37,9 @@ public class Admin extends javax.swing.JFrame {
         this.login = login;
         initComponents();
         // Setting up card layout
+        
+        RecentlyAddedQueue.initializingTable();
+        RecentlyAddedQueue.updateTable(recentlyAdded);
         productStored.populatingTable(productListTable, productStored.getAllProducts());
         productStored.refreshTable(productListTable);
         jPanel3.setLayout(new java.awt.CardLayout());
@@ -44,6 +50,7 @@ public class Admin extends javax.swing.JFrame {
         jPanel3.add(viewProduct, "viewProduct");
         jPanel3.add(addProduct, "addProduct");
         cardLayout.show(jPanel3, "Dashboard");
+        comboData();
         
     }
 
@@ -53,9 +60,9 @@ public class Admin extends javax.swing.JFrame {
         comboMonth.setEnabled(isFood);
         comboYear.setEnabled(isFood);
         if(!isFood){
-            comboDay.setSelectedItem(-1);
-            comboMonth.setSelectedItem(-1);
-            comboYear.setSelectedItem(-1);
+            comboDay.setSelectedItem(0);
+            comboMonth.setSelectedItem(0);
+            comboYear.setSelectedItem(0);
             
         }
         this.revalidate();
@@ -93,9 +100,11 @@ public class Admin extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        recentlyAdded = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        recentlySold = new javax.swing.JTable();
+        Restore = new javax.swing.JButton();
+        removeFromBin = new javax.swing.JButton();
         viewProduct = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -128,11 +137,9 @@ public class Admin extends javax.swing.JFrame {
         comboYear = new javax.swing.JComboBox<>();
         productId = new javax.swing.JTextField();
         productName = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
         uploadBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        sellItem = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -198,7 +205,7 @@ public class Admin extends javax.swing.JFrame {
                 logOutActionPerformed(evt);
             }
         });
-        jPanel1.add(logOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, -1));
+        jPanel1.add(logOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(143, 1, 119));
         jPanel3.setLayout(new java.awt.CardLayout());
@@ -213,7 +220,7 @@ public class Admin extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(249, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(245, 245, 245))
         );
@@ -276,7 +283,6 @@ public class Admin extends javax.swing.JFrame {
         productNum.setLayout(productNumLayout);
         productNumLayout.setHorizontalGroup(
             productNumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(productNumLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(productNumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -285,6 +291,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addComponent(jLabel7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         productNumLayout.setVerticalGroup(
             productNumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,7 +306,7 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        recentlyAdded.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -310,20 +317,36 @@ public class Admin extends javax.swing.JFrame {
                 "Product Id", "Product Name"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(recentlyAdded);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        recentlySold.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Product Id", "Product Name", "Expiry Date"
+                "Product Id", "Product Name"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        recentlySold.setToolTipText("");
+        jScrollPane3.setViewportView(recentlySold);
+
+        Restore.setText("Restore item");
+
+        removeFromBin.setText("Remove from bin");
+        removeFromBin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFromBinActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DashboardLayout = new javax.swing.GroupLayout(Dashboard);
         Dashboard.setLayout(DashboardLayout);
@@ -331,31 +354,40 @@ public class Admin extends javax.swing.JFrame {
             DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(DashboardLayout.createSequentialGroup()
+                .addGap(246, 246, 246)
+                .addComponent(productNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashboardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(DashboardLayout.createSequentialGroup()
-                        .addComponent(productNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(556, Short.MAX_VALUE))
-                    .addGroup(DashboardLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))))
+                        .addContainerGap())
+                    .addGroup(DashboardLayout.createSequentialGroup()
+                        .addComponent(Restore, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeFromBin)
+                        .addGap(19, 19, 19))))
         );
         DashboardLayout.setVerticalGroup(
             DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DashboardLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(productNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Restore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(DashboardLayout.createSequentialGroup()
-                        .addComponent(productNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DashboardLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32))
+                        .addGap(3, 3, 3)
+                        .addComponent(removeFromBin, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jPanel3.add(Dashboard, "card2");
@@ -385,7 +417,12 @@ public class Admin extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Sort By:");
 
-        sortBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product Id", "Name", "Category" }));
+        sortBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Product Id", "Name", "Category", "Price" }));
+        sortBy.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                sortByItemStateChanged(evt);
+            }
+        });
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Search Id:");
@@ -529,24 +566,23 @@ public class Admin extends javax.swing.JFrame {
                 categoryItemStateChanged(evt);
             }
         });
+        category.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryActionPerformed(evt);
+            }
+        });
 
-        comboDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
         comboDay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboDayActionPerformed(evt);
             }
         });
 
-        comboMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
-
-        comboYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
         comboYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboYearActionPerformed(evt);
             }
         });
-
-        jLabel12.setText("255*210");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -554,10 +590,8 @@ public class Admin extends javax.swing.JFrame {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel18)
@@ -581,7 +615,7 @@ public class Admin extends javax.swing.JFrame {
                             .addComponent(category, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(productName, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(productId, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,8 +628,7 @@ public class Admin extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(productId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
+                            .addComponent(productId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
@@ -618,7 +651,7 @@ public class Admin extends javax.swing.JFrame {
                             .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         uploadBtn.setText("Upload");
@@ -642,8 +675,6 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
-        sellItem.setText("Sell Item");
-
         javax.swing.GroupLayout addProductLayout = new javax.swing.GroupLayout(addProduct);
         addProduct.setLayout(addProductLayout);
         addProductLayout.setHorizontalGroup(
@@ -652,13 +683,11 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(addProductLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(uploadBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
+                .addGap(188, 188, 188)
                 .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-                .addComponent(sellItem, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addGap(33, 33, 33))
             .addGroup(addProductLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -670,11 +699,10 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(addProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(uploadBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sellItem, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(62, 62, 62))
         );
@@ -764,29 +792,80 @@ public class Admin extends javax.swing.JFrame {
 
     private void uploadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadBtnActionPerformed
         try{
-            String id = productId.getText();
-            String name = productName.getText();
+            String id = productId.getText().trim();
+            String name = productName.getText().trim();
             String ctg = category.getSelectedItem().toString();
-            int qty = Integer.parseInt(quantity.getText());
-            double price = Double.parseDouble(priceStr.getText());
+            if(id.isEmpty() || name.isEmpty() || quantity.getText().isEmpty()  || priceStr.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "The fields must not be empty", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            
+            for(Product p: productStored.getAllProducts()){
+                if(id.equalsIgnoreCase(p.getProductId())){
+                    JOptionPane.showMessageDialog(this, "The product id already exists in the system, Choose another",
+                            "Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+            
+            if(ctg.equalsIgnoreCase("Food")){
+                if(comboYear.getSelectedIndex() == 0){
+                    JOptionPane.showMessageDialog(this, "The expiry date of the food item must be set", "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+            
+            
+            int qty = Integer.parseInt(quantity.getText().trim());
+            double price = Double.parseDouble(priceStr.getText().trim());
             int year = Integer.parseInt(comboYear.getSelectedItem().toString());
             int month = Integer.parseInt(comboMonth.getSelectedItem().toString());
             int day = Integer.parseInt(comboDay.getSelectedItem().toString());
             LocalDate expiry = LocalDate.of(year, month, day);
-           
-            Product newProduct = new Product(id, name, ctg, qty, price, expiry);
             
+            if(ctg .equalsIgnoreCase("Food") && expiry.isBefore(LocalDate.now())){
+                JOptionPane.showMessageDialog(this, "Food expiry date cannot be in the past", "Invalid Date",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+           
+            if (qty <= 0 || price <= 0) {
+                JOptionPane.showMessageDialog(this, "Quantity or price cannot be zero or negative.", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            
+            Product newProduct = new Product(id, name, ctg, qty, price, expiry);
             productStored.addProduct(newProduct);
             categoryStored.addProduct(newProduct);
+            RecentlyAddedQueue.enqueue(newProduct);
+            
+            productId.setText("");
+            productName.setText("");
+            quantity.setText("");
+            priceStr.setText("");
+            comboDay.setSelectedIndex(0);
+            comboMonth.setSelectedIndex(0);
+            comboYear.setSelectedIndex(0);
             
             productStored.refreshTable(productListTable);
+            RecentlyAddedQueue.updateTable(recentlyAdded);
+            
             JOptionPane.showMessageDialog(this, "Product Added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
             
             
             
         }  
         catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Please enter valid quantity", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter numeric data in quantity and price fields", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+        catch(java.time.DateTimeException e){
+            JOptionPane.showMessageDialog(this, "Please enter a valid date", "Warning", JOptionPane.WARNING_MESSAGE);
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, "An error Occured", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -810,10 +889,14 @@ public class Admin extends javax.swing.JFrame {
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         String id = productId.getText().trim();
         
+        
         if(id.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please make sure you have entered Id", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
+        
+        
         int confirmation = JOptionPane.showConfirmDialog(this, "This process cannot be undone, Are you sure?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
         if(confirmation == JOptionPane.YES_OPTION){
             boolean isDeleted = productStored.deleteProduct(id);
@@ -827,7 +910,8 @@ public class Admin extends javax.swing.JFrame {
                 priceStr.setText("");
         }
             else{
-                JOptionPane.showMessageDialog(this, "Please enter correct product id", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Product Id not found. Please enter correct product id", "Warning",
+                        JOptionPane.WARNING_MESSAGE);
             }
         }
         
@@ -841,27 +925,38 @@ public class Admin extends javax.swing.JFrame {
             String id = productId.getText().trim();
             
             
+            
             if(id.isEmpty() || quantity.getText().isEmpty() || priceStr.getText().isEmpty() ){
-                JOptionPane.showMessageDialog(this, "Please make sure you have entered details to update", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please make sure you have entered details to update", "Warning",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
             try{
                 int qty = Integer.parseInt(quantity.getText().trim());
                 double price = Double.parseDouble(priceStr.getText().trim());
+                if(qty <= 0 || price <= 0){
+                    JOptionPane.showMessageDialog(this, "Quantity or price cannot be zero or negative.", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             
-            
-                int confirmation = JOptionPane.showConfirmDialog(this, "Only the quantity and price of the product will change.", "Confirm Update", JOptionPane.YES_NO_OPTION);
+                int confirmation = JOptionPane.showConfirmDialog(this, "Only the quantity and price of the product will change.",
+                        "Confirm Update", JOptionPane.YES_NO_OPTION);
                 if(confirmation == JOptionPane.YES_OPTION){
                     boolean updated = productStored.updateProduct(id, qty, price);
                     if(updated){
-                        JOptionPane.showMessageDialog(this, "Product Successfully Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Product Successfully Updated", "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
                         productStored.refreshTable(productListTable);
                     }
                     else{
-                        JOptionPane.showMessageDialog(this, "Please enter correct product id", "Warning", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Please enter correct product id", "Warning",
+                                JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                
+                productId.setText("");
+                productName.setText("");
+                quantity.setText("");
+                priceStr.setText("");
             
         }
             catch(NumberFormatException e){
@@ -873,6 +968,43 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_updateBtnActionPerformed
 
+    private void sortByItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sortByItemStateChanged
+        if(evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
+            String selectedOption = sortBy.getSelectedItem().toString();
+            ArrayList<Product> productListCopy = new ArrayList<>(productStored.getAllProducts());
+            if (selectedOption.equalsIgnoreCase("Product Id")){
+                Sorting.selectionSortId(productListCopy);
+            }        
+            productStored.populatingTable(productListTable, productListCopy);
+        }
+    }//GEN-LAST:event_sortByItemStateChanged
+
+    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_categoryActionPerformed
+
+    private void removeFromBinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromBinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeFromBinActionPerformed
+    
+    
+    private void comboData(){
+        comboDay.removeAllItems();
+        comboMonth.removeAllItems();
+        comboYear.removeAllItems();
+      
+        comboYear.addItem("0");
+        for(int i = 1; i <= 31; i++){
+            comboDay.addItem(String.valueOf(i));
+        }
+        for(int i = 1; i <= 12; i++){
+            comboMonth.addItem(String.valueOf(i));
+        }
+        for(int i = 2000; i <= 2030; i++){
+            comboYear.addItem(String.valueOf(i));
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -882,6 +1014,7 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Dashboard;
+    private javax.swing.JButton Restore;
     private javax.swing.JPanel addProduct;
     private javax.swing.JComboBox<String> category;
     private javax.swing.JComboBox<String> comboDay;
@@ -896,7 +1029,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -923,8 +1055,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JButton logOut;
     private javax.swing.JButton nameButton;
     private javax.swing.JTextField priceStr;
@@ -933,8 +1063,10 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JTextField productName;
     private javax.swing.JPanel productNum;
     private javax.swing.JTextField quantity;
+    private javax.swing.JTable recentlyAdded;
+    private javax.swing.JTable recentlySold;
+    private javax.swing.JButton removeFromBin;
     private javax.swing.JTextField searchName;
-    private javax.swing.JButton sellItem;
     private javax.swing.JComboBox<String> sortBy;
     private javax.swing.JButton update;
     private javax.swing.JButton updateBtn;
