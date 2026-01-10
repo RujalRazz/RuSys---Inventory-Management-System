@@ -12,7 +12,8 @@ import javax.swing.*;
 public class Login extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
-    
+    private Admin adminPage;
+    private User userPage;
     
     
     
@@ -162,7 +163,7 @@ public class Login extends javax.swing.JFrame {
         String pass = new String(password.getPassword());
 
         // Comparing to see whether the text field is empty or not
-        if(userName.equalsIgnoreCase("") || pass.equals("")){
+        if(userName.isEmpty() || pass.isEmpty()){
             JOptionPane.showMessageDialog(this,
                 "Please fill all fields.",
                 "Warning",
@@ -170,16 +171,25 @@ public class Login extends javax.swing.JFrame {
         }
         // admin credentials
         else if(userName.equalsIgnoreCase("admin") && pass.equals("admin")){
-            Admin admin = new Admin(this);
-            admin.setVisible(true);
+            if (adminPage == null) {
+                adminPage = new Admin(this);
+            }
+            adminPage.setVisible(true);
             this.setVisible(false);
+            
         }
         // users credentials
-        else{
-            User user = new User(this);
-            user.setVisible(true);
+        else if(userName.equalsIgnoreCase("user") && pass.equals("user")){
+            if(userPage == null) {
+            userPage = new User(this);
+            }
+            userPage.setVisible(true);
             this.setVisible(false);
-        }// TODO add your handling code here:
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please enter correct information", "Invalid", JOptionPane.WARNING_MESSAGE);
+        }
+// TODO add your handling code here:
     }//GEN-LAST:event_loginSubmitActionPerformed
 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed

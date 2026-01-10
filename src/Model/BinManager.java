@@ -8,6 +8,11 @@ package Model;
  *
  * @author ruzalrajopadhyay
  */
+
+import java.util.LinkedList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 public class BinManager {
     
 }

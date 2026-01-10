@@ -1,8 +1,9 @@
+package View;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package View;
+
 
 /**
  *
@@ -13,6 +14,8 @@ import javax.swing.*;
 import Model.ProductStored;
 import Model.CategoryStored;
 import Model.Product;
+import Model.Cart;
+import Model.CartItem;
 import Controller.Search;
 import static View.Admin.productStored;
 public class User extends javax.swing.JFrame {
@@ -27,6 +30,7 @@ public class User extends javax.swing.JFrame {
     private CardLayout cardLayout;
     ProductStored productStored = Admin.productStored;
     CategoryStored categoryStored = Admin.categoryStored;
+    static CartItem cartItem = new CartItem();
     // Constructor for the user class
     public User(Login login) {
         // initializing parameters
@@ -35,6 +39,7 @@ public class User extends javax.swing.JFrame {
         // Setting up card layout
         
         productStored.refreshTable(productList);
+        cartItem.refreshCartTable(cartTable);
         jPanel2.setLayout(new java.awt.CardLayout());
         cardLayout = (CardLayout) jPanel2.getLayout();
  
@@ -220,6 +225,11 @@ public class User extends javax.swing.JFrame {
         jLabel7.setText("Enter Id:");
 
         addCart.setText("Add To Cart");
+        addCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCartActionPerformed(evt);
+            }
+        });
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Quantity:");
@@ -232,7 +242,7 @@ public class User extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Product Id", "Product Name", "Category", "Price", "Quantity", "Expiry"
+                "Product Id", "Product Name", "Category", "Quantity", "Price", "Expiry"
             }
         ));
         jScrollPane1.setViewportView(productList);
@@ -346,6 +356,11 @@ public class User extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(143, 1, 119));
 
         removeCart.setText("Remove From Cart");
+        removeCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeCartActionPerformed(evt);
+            }
+        });
 
         cartTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -491,6 +506,85 @@ public class User extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_idSearchbtnActionPerformed
 
+    private void addCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCartActionPerformed
+        try{
+            String id = idCart.getText().trim();
+            String strQty = quantity.getText().trim();
+            
+            if(id.isEmpty() || strQty.isEmpty()){
+                JOptionPane.showMessageDialog(this, "The fields must be filled.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Product foundProduct = null;
+            for (Product p : productStored.getAllProducts()) {
+            if (id.equalsIgnoreCase(p.getProductId())) {
+                foundProduct = p;
+                break;
+            }
+        }
+            if (foundProduct != null){
+                int qty = Integer.parseInt(strQty);
+                if(qty <= 0){
+                    JOptionPane.showMessageDialog(this, "Quantity must be greater than zero.", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (foundProduct.getQuantity() < qty) {
+                     JOptionPane.showMessageDialog(this, "Insufficient stock! Only " + foundProduct.getQuantity() + " available.",
+                             "Insufficient Stock",JOptionPane.WARNING_MESSAGE);
+                    return;
+            }
+                Cart cartContent = new Cart(foundProduct, qty);
+                cartItem.addToCart(foundProduct, qty);
+                cartItem.refreshCartTable(cartTable);
+                
+                idCart.setText("");
+                quantity.setText("");
+                
+                JOptionPane.showMessageDialog(this, foundProduct.getProductName() + " added to cart.", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+            
+            else {
+            JOptionPane.showMessageDialog(this, "Product ID not found in inventory.", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            
+        }
+        catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Please enter a valid number for quantity.", "Warning",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this, "An error occured.", "Warning",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addCartActionPerformed
+
+    private void removeCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCartActionPerformed
+        String id = cartProductId.getText().trim();
+        if(id.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter the Product ID you wish to remove.", "Field Empty", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        boolean removedStatus = cartItem.removeItem(id);
+        if(removedStatus){
+            cartItem.refreshCartTable(cartTable);
+            cartProductId.setText("");
+            JOptionPane.showMessageDialog(this, "Product " + id + " removed from cart.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, 
+                "Product ID not found in your current cart.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        
+            
+             // TODO add your handling code here:
+    }//GEN-LAST:event_removeCartActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -537,3 +631,5 @@ public class User extends javax.swing.JFrame {
     private javax.swing.JPanel viewProduct;
     // End of variables declaration//GEN-END:variables
 }
+
+

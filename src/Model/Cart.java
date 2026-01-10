@@ -10,11 +10,28 @@ package Model;
  */
 import java.util.LinkedList;
 public class Cart {
-    private LinkedList<CartItem> items;
-    public Cart(){
-        items = new LinkedList<>();
+    private Product products;
+    private int quantity;
+    
+    public Cart(Product products, int quantity){
+        this.products = products;
+        this.quantity = quantity;
     }
-    public LinkedList<CartItem> getItems(){
-        return items;
+    
+    public Product getProduct(){
+        return this.products;
+    }
+    
+    public int getQuantity(){
+        return this.quantity;
+    }
+    
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+    
+    public double getTotalPrice(){
+        return products.getPrice() * quantity;
     }
 }
+

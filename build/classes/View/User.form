@@ -382,6 +382,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Add To Cart"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCartActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
@@ -407,8 +410,8 @@
                             <Column editable="true" title="Product Id" type="java.lang.Object"/>
                             <Column editable="true" title="Product Name" type="java.lang.Object"/>
                             <Column editable="true" title="Category" type="java.lang.Object"/>
-                            <Column editable="true" title="Price" type="java.lang.Object"/>
                             <Column editable="true" title="Quantity" type="java.lang.Object"/>
+                            <Column editable="true" title="Price" type="java.lang.Object"/>
                             <Column editable="true" title="Expiry" type="java.lang.Object"/>
                           </Table>
                         </Property>
@@ -533,6 +536,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Remove From Cart"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeCartActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jPanel8">
 

@@ -459,7 +459,7 @@ public class Admin extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Product Id", "Product Name", "Category", "Price", "Quantity", "Expiry Date"
+                "Product Id", "Product Name", "Category", "Quantity", "Price", "Expiry Date"
             }
         ));
         jScrollPane1.setViewportView(productListTable);
