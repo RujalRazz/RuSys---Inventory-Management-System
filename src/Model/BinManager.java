@@ -8,6 +8,6 @@ package Model;
  *
  * @author ruzalrajopadhyay
  */
-public class SoldItemQueue {
+public class BinManager {
     
 }

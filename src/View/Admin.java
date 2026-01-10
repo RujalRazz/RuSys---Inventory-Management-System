@@ -102,7 +102,7 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         recentlyAdded = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        recentlySold = new javax.swing.JTable();
+        bin = new javax.swing.JTable();
         Restore = new javax.swing.JButton();
         removeFromBin = new javax.swing.JButton();
         viewProduct = new javax.swing.JPanel();
@@ -319,7 +319,7 @@ public class Admin extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(recentlyAdded);
 
-        recentlySold.setModel(new javax.swing.table.DefaultTableModel(
+        bin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -336,8 +336,8 @@ public class Admin extends javax.swing.JFrame {
                 "Product Id", "Product Name"
             }
         ));
-        recentlySold.setToolTipText("");
-        jScrollPane3.setViewportView(recentlySold);
+        bin.setToolTipText("");
+        jScrollPane3.setViewportView(bin);
 
         Restore.setText("Restore item");
 
@@ -1016,6 +1016,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JPanel Dashboard;
     private javax.swing.JButton Restore;
     private javax.swing.JPanel addProduct;
+    private javax.swing.JTable bin;
     private javax.swing.JComboBox<String> category;
     private javax.swing.JComboBox<String> comboDay;
     private javax.swing.JComboBox<String> comboMonth;
@@ -1064,7 +1065,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JPanel productNum;
     private javax.swing.JTextField quantity;
     private javax.swing.JTable recentlyAdded;
-    private javax.swing.JTable recentlySold;
     private javax.swing.JButton removeFromBin;
     private javax.swing.JTextField searchName;
     private javax.swing.JComboBox<String> sortBy;
