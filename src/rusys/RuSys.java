@@ -8,13 +8,16 @@ package rusys;
  *
  * @author ruzalrajopadhyay
  */
+
+import View.Welcome;
 public class RuSys {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Welcome wc = new Welcome();
+        wc.increaseProgressBar();// TODO code application logic here
     }
     
 }

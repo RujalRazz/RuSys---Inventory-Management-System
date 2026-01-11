@@ -4,6 +4,8 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ruzalrajopadhyay
@@ -18,6 +20,7 @@ public class Welcome extends javax.swing.JFrame {
     public Welcome() {
         initComponents();
         
+       
         
     }
 
@@ -106,8 +109,8 @@ public class Welcome extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-       Welcome wel = new Welcome(); // Creating object for our class Welcome.java
+    public void increaseProgressBar(){
+        Welcome wel = new Welcome(); // Creating object for our class Welcome.java
        wel.setVisible(true); // Setting the visibility to true 
        
        Login login = new Login(); // Creating object for our Login.java class
@@ -116,15 +119,39 @@ public class Welcome extends javax.swing.JFrame {
            for(int i = 0; i < 100; i++){ // This loop runs from 0 to 100 indicating the progress percentage
                Thread.sleep(40); // This will pause each execution for 40 milisecond
                wel.loading.setValue(i); // This will increase the progress bar
+               wel.loading.paintImmediately(wel.loading.getBounds());
            }
             
        }
        catch(Exception e){
-       
+           
        }
        wel.setVisible(false);
        login.setVisible(true);
        wel.dispose();
+        
+    
+    }
+    public static void main(String args[]) {
+//       Welcome wel = new Welcome(); // Creating object for our class Welcome.java
+//       wel.setVisible(true); // Setting the visibility to true 
+//       
+//       Login login = new Login(); // Creating object for our Login.java class
+//       // Exception handeling to increase progress bar's value of the loading screen
+//       try{ 
+//           for(int i = 0; i < 100; i++){ // This loop runs from 0 to 100 indicating the progress percentage
+//               Thread.sleep(40); // This will pause each execution for 40 milisecond
+//               wel.loading.setValue(i); // This will increase the progress bar
+//               wel.loading.paintImmediately(wel.loading.getBounds());
+//           }
+//            
+//       }
+//       catch(Exception e){
+//           
+//       }
+//       wel.setVisible(false);
+//       login.setVisible(true);
+//       wel.dispose();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -343,6 +343,11 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane3.setViewportView(bin);
 
         Restore.setText("Restore item");
+        Restore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RestoreActionPerformed(evt);
+            }
+        });
 
         removeFromBin.setText("Remove from bin");
         removeFromBin.addActionListener(new java.awt.event.ActionListener() {
@@ -900,23 +905,30 @@ public class Admin extends javax.swing.JFrame {
             return;
         }
         
-        
-        
-        int confirmation = JOptionPane.showConfirmDialog(this, "This process cannot be undone, Are you sure?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-        if(confirmation == JOptionPane.YES_OPTION){
-            boolean isDeleted = productStored.deleteProduct(id);
-            if(isDeleted){
-                JOptionPane.showMessageDialog(this, "Product Successfully deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
-                
-                productStored.refreshTable(productListTable);
-                productId.setText("");
-                productName.setText("");
-                quantity.setText("");
-                priceStr.setText("");
-        }
-            else{
-                JOptionPane.showMessageDialog(this, "Product Id not found. Please enter correct product id", "Warning",
-                        JOptionPane.WARNING_MESSAGE);
+        Product productToDelete = productStored.searchById(id);
+        if(productToDelete != null){
+            int confirmation = JOptionPane.showConfirmDialog(this, "This process cannot be undone, Are you sure?",
+                    "Confirm Delete", JOptionPane.YES_NO_OPTION);
+            if(confirmation == JOptionPane.YES_OPTION){
+                boolean isDeleted = productStored.deleteProduct(id);
+                if(isDeleted){
+                    Model.BinManager.push(productToDelete);
+                    JOptionPane.showMessageDialog(this, "Product Successfully deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    Model.RecentlyAddedQueue.productDeletion(id);
+                    
+                    
+                    productStored.refreshTable(productListTable);
+                    Model.BinManager.refreshBinTable(bin);
+                    Model.RecentlyAddedQueue.updateTable(recentlyAdded);
+                    productId.setText("");
+                    productName.setText("");
+                    quantity.setText("");
+                    priceStr.setText("");
+            }
+                else{
+                    JOptionPane.showMessageDialog(this, "Product Id not found. Please enter correct product id", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             }
         }
         
@@ -1005,6 +1017,10 @@ public class Admin extends javax.swing.JFrame {
     private void searchNameInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_searchNameInputMethodTextChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_searchNameInputMethodTextChanged
+
+    private void RestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestoreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RestoreActionPerformed
     
     
     private void comboData(){
