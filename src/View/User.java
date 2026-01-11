@@ -603,6 +603,9 @@ public class User extends javax.swing.JFrame {
             else if(selectedOption.equalsIgnoreCase("Electronic") ||selectedOption.equalsIgnoreCase("Food") || selectedOption.equalsIgnoreCase("Shoes")) {
                 productListCopy = new ArrayList<Product>(categoryStored.getByCategory(selectedOption));
             }
+            else if(selectedOption.equalsIgnoreCase("Name")){
+                Sorting.mergeSortName(productListCopy);
+            }
             
             
             productStored.populatingTable(productList, productListCopy);
