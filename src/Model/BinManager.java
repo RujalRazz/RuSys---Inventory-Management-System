@@ -59,13 +59,14 @@ public class BinManager {
             model.addRow(row);
         }
     }
-    public static void restoreItem(ProductStored products, JTable mainTable, JTable binTable){
+    public static boolean restoreItem(ProductStored products, JTable mainTable, JTable binTable){
         Product itemToRestore = pop();
         if(itemToRestore == null){
-            return;
+            return false;
         }
         products.addProduct(itemToRestore);
         products.refreshTable(mainTable);
         refreshBinTable(binTable);
+        return true;
     } 
 }

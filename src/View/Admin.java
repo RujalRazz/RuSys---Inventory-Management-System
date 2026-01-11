@@ -10,6 +10,7 @@ package View;
  */
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import javax.swing.*;
 import Model.Product;
 import Model.ProductStored;
@@ -20,6 +21,7 @@ import Controller.Sorting;
 import Model.RecentlyAddedQueue;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import Model.BinManager;
 public class Admin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Admin.class.getName());
@@ -43,9 +45,10 @@ public class Admin extends javax.swing.JFrame {
         RecentlyAddedQueue.initializingTable();
         RecentlyAddedQueue.updateTable(recentlyAdded);
         productStored.populatingTable(productListTable, productStored.getAllProducts());
-        
+        TotalItemText();
         productStored.refreshTable(productListTable);
         searchAction();
+        
         jPanel3.setLayout(new java.awt.CardLayout());
         cardLayout = (CardLayout) jPanel3.getLayout();
         
@@ -101,7 +104,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         itemCategory = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
+        TotalItems = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         recentlyAdded = new javax.swing.JTable();
@@ -249,7 +252,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,7 +262,12 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        itemCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Electronics", "Food ", "Shoes", " " }));
+        itemCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Electronic", "Food", "Shoes" }));
+        itemCategory.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                itemCategoryItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -274,12 +282,14 @@ public class Admin extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(itemCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addComponent(itemCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        jLabel7.setText("120");
+        TotalItems.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        TotalItems.setText("120");
 
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel6.setText("Category");
 
         javax.swing.GroupLayout productNumLayout = new javax.swing.GroupLayout(productNum);
@@ -288,11 +298,14 @@ public class Admin extends javax.swing.JFrame {
             productNumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(productNumLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(productNumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(51, 51, 51)
-                .addComponent(jLabel7)
+                .addGroup(productNumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(productNumLayout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(TotalItems))
+                    .addGroup(productNumLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel6)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -305,7 +318,7 @@ public class Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(productNumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(TotalItems))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -361,10 +374,6 @@ public class Admin extends javax.swing.JFrame {
         DashboardLayout.setHorizontalGroup(
             DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(DashboardLayout.createSequentialGroup()
-                .addGap(246, 246, 246)
-                .addComponent(productNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashboardLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -378,6 +387,10 @@ public class Admin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(removeFromBin)
                         .addGap(19, 19, 19))))
+            .addGroup(DashboardLayout.createSequentialGroup()
+                .addGap(272, 272, 272)
+                .addComponent(productNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         DashboardLayout.setVerticalGroup(
             DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1011,6 +1024,19 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_categoryActionPerformed
 
     private void removeFromBinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromBinActionPerformed
+       int confirm = JOptionPane.showConfirmDialog(this, 
+            "Are you sure you want to permanently delete the last item from the bin?.", 
+            "Confirm Permanent Deletion", JOptionPane.YES_NO_OPTION);
+       if(confirm == JOptionPane.YES_OPTION){
+           Product deletedItem = BinManager.pop();
+           if(deletedItem == null){
+               JOptionPane.showMessageDialog(this, "The Table is empty", "Warning", JOptionPane.WARNING_MESSAGE);
+               return;
+           }
+           JOptionPane.showMessageDialog(this, "The product " + deletedItem.getProductName() + " Has been deleted from the bin",
+                   "Success", JOptionPane.INFORMATION_MESSAGE);
+           BinManager.refreshBinTable(bin);
+       }
         // TODO add your handling code here:
     }//GEN-LAST:event_removeFromBinActionPerformed
 
@@ -1019,8 +1045,46 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_searchNameInputMethodTextChanged
 
     private void RestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestoreActionPerformed
-        // TODO add your handling code here:
+        boolean restoration = BinManager.restoreItem(productStored, productListTable, bin);
+        
+        if(restoration){
+           JOptionPane.showMessageDialog(this, "The item has been restored", "Success", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "There are no items to be restored", "Warning", JOptionPane.WARNING_MESSAGE);
+        }// TODO add your handling code here:
     }//GEN-LAST:event_RestoreActionPerformed
+
+    private void itemCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryItemStateChanged
+        if(evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
+            String category = itemCategory.getSelectedItem().toString();
+            categoryStored = new CategoryStored(productStored.getAllProducts());
+            if (category.equalsIgnoreCase("All")) {
+            
+                ArrayList<Product> allProducts = productStored.getAllProducts();
+            
+                if (allProducts != null) {
+                    TotalItems.setText(String.valueOf(allProducts.size()));
+                    productStored.populatingTable(productListTable, allProducts);
+                } 
+                else {
+                    TotalItems.setText("0");
+                    productStored.populatingTable(productListTable, new ArrayList<Product>());
+                }
+                
+            }
+            else{
+                LinkedList<Product> categoryProducts = categoryStored.getByCategory(category);
+                
+                if (categoryProducts != null && !categoryProducts.isEmpty()) {
+                    TotalItems.setText(String.valueOf(categoryProducts.size()));
+            }
+                else{
+                    TotalItems.setText("0");
+                }
+        }    
+        }// TODO add your handling code here:
+    }//GEN-LAST:event_itemCategoryItemStateChanged
     
     
     private void comboData(){
@@ -1073,7 +1137,19 @@ public class Admin extends javax.swing.JFrame {
             }
             });
     }
-    
+    private void TotalItemText(){
+        itemCategory.setSelectedItem("All");
+        ArrayList<Product> allProducts = productStored.getAllProducts();
+        if (allProducts != null) {
+            TotalItems.setText(String.valueOf(allProducts.size()));
+            productStored.populatingTable(productListTable, allProducts);
+        }
+        else {
+            TotalItems.setText("0");
+            productStored.populatingTable(productListTable, new ArrayList<Product>());
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -1084,6 +1160,7 @@ public class Admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Dashboard;
     private javax.swing.JButton Restore;
+    private javax.swing.JLabel TotalItems;
     private javax.swing.JPanel addProduct;
     private javax.swing.JTable bin;
     private javax.swing.JComboBox<String> category;
@@ -1109,7 +1186,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
