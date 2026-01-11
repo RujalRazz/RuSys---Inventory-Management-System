@@ -17,7 +17,10 @@ import Model.Product;
 import Model.Cart;
 import Model.CartItem;
 import Controller.Search;
+import Controller.Sorting;
+import static View.Admin.categoryStored;
 import static View.Admin.productStored;
+import java.util.ArrayList;
 public class User extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(User.class.getName());
@@ -202,7 +205,12 @@ public class User extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Sort By:");
 
-        sortBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        sortBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Product Id", "Name", "Price", "Electronic", "Food", "Shoes" }));
+        sortBy.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                sortByItemStateChanged(evt);
+            }
+        });
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Search Id: ");
@@ -379,7 +387,7 @@ public class User extends javax.swing.JFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -584,6 +592,22 @@ public class User extends javax.swing.JFrame {
             
              // TODO add your handling code here:
     }//GEN-LAST:event_removeCartActionPerformed
+
+    private void sortByItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sortByItemStateChanged
+        if(evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
+            String selectedOption = sortBy.getSelectedItem().toString();
+            ArrayList<Product> productListCopy = new ArrayList<Product>(productStored.getAllProducts());
+            if (selectedOption.equalsIgnoreCase("Product Id")){
+                Sorting.selectionSortId(productListCopy);
+            }
+            else if(selectedOption.equalsIgnoreCase("Electronic") ||selectedOption.equalsIgnoreCase("Food") || selectedOption.equalsIgnoreCase("Shoes")) {
+                productListCopy = new ArrayList<Product>(categoryStored.getByCategory(selectedOption));
+            }
+            
+            
+            productStored.populatingTable(productList, productListCopy);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_sortByItemStateChanged
 
     /**
      * @param args the command line arguments

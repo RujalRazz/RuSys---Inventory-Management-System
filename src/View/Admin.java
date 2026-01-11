@@ -29,7 +29,7 @@ public class Admin extends javax.swing.JFrame {
     private Login login;
     private CardLayout cardLayout;
     static ProductStored productStored = new ProductStored();
-    static CategoryStored categoryStored = new CategoryStored();
+    static CategoryStored categoryStored = new CategoryStored(productStored.getAllProducts());
     
     // Constructor of the admin class
     public Admin(Login login) {
@@ -41,6 +41,7 @@ public class Admin extends javax.swing.JFrame {
         RecentlyAddedQueue.initializingTable();
         RecentlyAddedQueue.updateTable(recentlyAdded);
         productStored.populatingTable(productListTable, productStored.getAllProducts());
+        
         productStored.refreshTable(productListTable);
         jPanel3.setLayout(new java.awt.CardLayout());
         cardLayout = (CardLayout) jPanel3.getLayout();
@@ -417,7 +418,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Sort By:");
 
-        sortBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Product Id", "Name", "Category", "Price" }));
+        sortBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Product Id", "Name", "Price", "Electronic", "Food", "Shoes" }));
         sortBy.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 sortByItemStateChanged(evt);
@@ -482,11 +483,11 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(idButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addGap(1, 1, 1)
+                .addGap(7, 7, 7)
                 .addComponent(searchName, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nameButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
             .addGroup(viewProductLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -971,10 +972,15 @@ public class Admin extends javax.swing.JFrame {
     private void sortByItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sortByItemStateChanged
         if(evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
             String selectedOption = sortBy.getSelectedItem().toString();
-            ArrayList<Product> productListCopy = new ArrayList<>(productStored.getAllProducts());
+            ArrayList<Product> productListCopy = new ArrayList<Product>(productStored.getAllProducts());
             if (selectedOption.equalsIgnoreCase("Product Id")){
                 Sorting.selectionSortId(productListCopy);
-            }        
+            }
+            else if(selectedOption.equalsIgnoreCase("Electronic") ||selectedOption.equalsIgnoreCase("Food") || selectedOption.equalsIgnoreCase("Shoes")) {
+                productListCopy = new ArrayList<Product>(categoryStored.getByCategory(selectedOption));
+            }
+            
+            
             productStored.populatingTable(productListTable, productListCopy);
         }
     }//GEN-LAST:event_sortByItemStateChanged

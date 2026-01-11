@@ -16,13 +16,11 @@ public class ProductStored {
     private ArrayList<Product> products;
     public ProductStored(){
         products = new ArrayList<Product>();
-        products.add(new Product("P001", "MacBook Pro", "Electronics", 300000, 250, LocalDate.of(0, 1, 1)));
-        products.add(new Product("P002", "iPhone 15", "Electronics", 250000, 1200, LocalDate.of(0, 1, 1)));
+        products.add(new Product("P001", "MacBook Pro", "Electronic", 300000, 250, LocalDate.of(0, 1, 1)));
+        products.add(new Product("P002", "iPhone 15", "Electronic", 250000, 1200, LocalDate.of(0, 1, 1)));
         products.add(new Product("P003", "Nike Air Max", "Shoes", 15000, 150, LocalDate.of(0, 1, 1)));
         products.add(new Product("P004", "Organic Milk", "Food", 300, 10, LocalDate.of(2026, 2, 15)));
-        products.add(new Product("P005", "Bread", "Food", 200, 20, LocalDate.of(2026, 2, 20))); 
-        
-        
+        products.add(new Product("P005", "Bread", "Food", 200, 20, LocalDate.of(2026, 2, 20)));
     }
     public void addProduct(Product product){
         products.add(product);

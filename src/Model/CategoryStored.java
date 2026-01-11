@@ -10,14 +10,17 @@ package Model;
  */
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.ArrayList;
 public class CategoryStored {
     private HashMap<String, LinkedList<Product>> categoryStored;
-    public CategoryStored(){
+    public CategoryStored(ArrayList<Product> initialProducts){
         categoryStored = new HashMap<String, LinkedList<Product>>();
-        categoryStored.put("Electronics", new LinkedList<Product>());
+        categoryStored.put("Electronic", new LinkedList<Product>());
         categoryStored.put("Food", new LinkedList<Product>());
         categoryStored.put("Shoes", new LinkedList<Product>());
-        
+        for (Product p : initialProducts) {
+            addProduct(p);
+        }    
     }
     public void addProduct(Product product){
         LinkedList<Product> list = categoryStored.get(product.getCategory());
