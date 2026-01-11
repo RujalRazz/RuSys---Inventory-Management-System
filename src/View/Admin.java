@@ -18,6 +18,8 @@ import java.time.LocalDate;
 import Controller.Search;
 import Controller.Sorting;
 import Model.RecentlyAddedQueue;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 public class Admin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Admin.class.getName());
@@ -43,6 +45,7 @@ public class Admin extends javax.swing.JFrame {
         productStored.populatingTable(productListTable, productStored.getAllProducts());
         
         productStored.refreshTable(productListTable);
+        searchAction();
         jPanel3.setLayout(new java.awt.CardLayout());
         cardLayout = (CardLayout) jPanel3.getLayout();
         
@@ -116,7 +119,6 @@ public class Admin extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         searchName = new javax.swing.JTextField();
         idButton = new javax.swing.JButton();
-        nameButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         productListTable = new javax.swing.JTable();
         addProduct = new javax.swing.JPanel();
@@ -437,6 +439,13 @@ public class Admin extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Search Product:");
 
+        searchName.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                searchNameInputMethodTextChanged(evt);
+            }
+        });
         searchName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchNameActionPerformed(evt);
@@ -449,8 +458,6 @@ public class Admin extends javax.swing.JFrame {
                 idButtonActionPerformed(evt);
             }
         });
-
-        nameButton.setText("Search");
 
         productListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -481,13 +488,11 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(idSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(idButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(76, 76, 76)
                 .addComponent(jLabel10)
-                .addGap(7, 7, 7)
-                .addComponent(searchName, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nameButton)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchName, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(viewProductLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -505,8 +510,7 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(sortBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(idSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idButton)
-                    .addComponent(nameButton))
+                    .addComponent(idButton))
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                 .addContainerGap())
@@ -982,7 +986,9 @@ public class Admin extends javax.swing.JFrame {
             else if(selectedOption.equalsIgnoreCase("Name")){
                 Sorting.mergeSortName(productListCopy);
             }
-            
+            else if(selectedOption.equalsIgnoreCase("Price")){
+                Sorting.insertionSortPrice(productListCopy);
+            }
             
             productStored.populatingTable(productListTable, productListCopy);
         }
@@ -995,6 +1001,10 @@ public class Admin extends javax.swing.JFrame {
     private void removeFromBinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromBinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_removeFromBinActionPerformed
+
+    private void searchNameInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_searchNameInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchNameInputMethodTextChanged
     
     
     private void comboData(){
@@ -1014,6 +1024,40 @@ public class Admin extends javax.swing.JFrame {
         }
         
     }
+    
+    private void searchItem(){
+        String userInput = searchName.getText().toLowerCase().trim();
+        ArrayList<Product> allProducts = productStored.getAllProducts();
+        if(userInput.isEmpty()){
+            productStored.populatingTable(productListTable, allProducts);
+            return;
+        }
+        ArrayList<Product> searchContents = new ArrayList<>();
+        for (Product product : allProducts) {
+            if(product.getProductName().toLowerCase().contains(userInput)){
+                searchContents.add(product);
+            }
+        }
+        productStored.populatingTable(productListTable, searchContents);
+    }
+    
+    private void searchAction(){
+        searchName.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchItem();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchItem();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchItem();
+            }
+            });
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1066,7 +1110,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton logOut;
-    private javax.swing.JButton nameButton;
     private javax.swing.JTextField priceStr;
     private javax.swing.JTextField productId;
     private javax.swing.JTable productListTable;

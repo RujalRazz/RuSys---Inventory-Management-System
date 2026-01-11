@@ -248,9 +248,7 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="productSearch" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="productSearchbtn" min="-2" max="-2" attributes="0"/>
+                                  <Component id="productSearch" min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -270,7 +268,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="53" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -287,7 +285,6 @@
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="productSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="idSearchbtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="productSearchbtn" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="220" max="-2" attributes="0"/>
@@ -357,9 +354,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="productSearch">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jTextField1"/>
-                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="productSearchActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="idSearchbtn">
                   <Properties>
@@ -368,11 +365,6 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idSearchbtnActionPerformed"/>
                   </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="productSearchbtn">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Search"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel7">
                   <Properties>

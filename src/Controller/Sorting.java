@@ -81,5 +81,24 @@ public class Sorting {
             products.set(left + x, item.get(x));
         }
     }
-    
+    public static void insertionSortPrice(ArrayList<Product> products){
+        if (products == null || products.size() < 2) {
+        return;
+    }
+        int size = products.size();
+        for (int i = 1; i < size; i++) {
+            Product item = products.get(i);
+            double itemPrice = item.getPrice();
+            
+            int j = i - 1;
+            
+            while(j >= 0 && products.get(j).getPrice() > itemPrice){
+                products.set(j + 1, products.get(j));
+                j--;
+                
+            }
+            products.set(j + 1, item);
+        }
+       
+}
 }
