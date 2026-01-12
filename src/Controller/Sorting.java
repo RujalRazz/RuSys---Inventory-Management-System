@@ -5,12 +5,15 @@
 package Controller;
 
 /**
- *
+ * The class sorting consists multiple sorting algorithm such as selection Sort, insertion sort, and merge sort.
+ * These methods are essential to sort the arrayList based on user's desire.
  * @author ruzalrajopadhyay
  */
 import java.util.ArrayList;
 import Model.Product;
 public class Sorting {
+    
+    
     public static void selectionSortId(ArrayList<Product> products){
           if (products == null || products.size() < 2) {
             return;
