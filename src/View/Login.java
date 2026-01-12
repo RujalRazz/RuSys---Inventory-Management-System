@@ -5,7 +5,9 @@
 package View;
 
 /**
- *
+ * The class login is used to differentiate user or admin
+ * The visitor gets admin access if they enter admin's credentials i.e. (username = Admin) and (password = admin)
+ * The visitor gets user access if they enter user's credentials i.e. (username = User) and (password = user)
  * @author ruzalrajopadhyay
  */
 import javax.swing.*;

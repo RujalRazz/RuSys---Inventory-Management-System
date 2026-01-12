@@ -5,9 +5,13 @@
 package View;
 
 /**
- *
+ * The admin class is the essential class that is used by the inventory's administrator to perform multiple operations
+ * such as Create, read, update, and delete.
+ * The logic of data structure and algorithm is also implemented here which runs based on the admin's command.
+ * 
  * @author ruzalrajopadhyay
  */
+// importing essential 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -60,8 +64,11 @@ public class Admin extends javax.swing.JFrame {
         comboData();
         
     }
-
+    /*
+    The method is used to update the expiry da
+    */
     private void updateExpiry(){
+        
         boolean isFood = "Food".equalsIgnoreCase(category.getSelectedItem().toString());
         comboDay.setEnabled(isFood);
         comboMonth.setEnabled(isFood);

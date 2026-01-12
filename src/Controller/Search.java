@@ -5,13 +5,14 @@
 package Controller;
 
 /**
- *
+ * The method is used to perform search operation
  * @author ruzalrajopadhyay
  */
 import Model.Product;
 import java.util.ArrayList;
 public class Search {
     public static Product binarySearchId(ArrayList<Product> products, String id){
+            Sorting.selectionSortId(products);
             int low = 0;
             int high = products.size() - 1;
             
