@@ -113,27 +113,34 @@ public class Sorting {
             j++;
         }
         
+        // copying the sorted elements from the item list to the original list
         for (int x = 0; x < item.size(); x++) {
             products.set(left + x, item.get(x));
         }
     }
-    
+    // Time complexity: O(n²)
     public static void insertionSortPrice(ArrayList<Product> products){
+        
+        // Checking if the ArrayList is empty or has only one element
         if (products == null || products.size() < 2) {
         return;
     }
+        
         int size = products.size();
+        
+        //Looping throught the size of arraylist
         for (int i = 1; i < size; i++) {
             Product item = products.get(i);
             double itemPrice = item.getPrice();
             
             int j = i - 1;
-            
+            // Moving item that are greater than the itemPrice to next index in the list
             while(j >= 0 && products.get(j).getPrice() > itemPrice){
                 products.set(j + 1, products.get(j));
                 j--;
                 
             }
+            // Placing item in the correct position
             products.set(j + 1, item);
         }
        

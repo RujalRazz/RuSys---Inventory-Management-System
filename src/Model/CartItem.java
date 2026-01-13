@@ -5,7 +5,7 @@
 package Model;
 
 /**
- *
+ * The method helps to perform operations in the users cart menu
  * @author ruzalrajopadhyay
  */
 import java.util.LinkedList;
@@ -13,11 +13,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 public class CartItem {
     private LinkedList<Cart> cart;
-   
+   // Initializing the linked List
     public CartItem(){
         cart = new LinkedList<Cart>();
     }
-    
+    // the method is used to add thd product to the cart
     public void addToCart(Product product, int qty){
         boolean found = false;
         for(int i = 0; i < cart.size(); i++){
@@ -33,6 +33,7 @@ public class CartItem {
             cart.add(new Cart(product, qty));
         }
     }
+    // The method is used to remove the item from the cart
     public boolean removeItem(String productId){
         
         for(int i = 0; i < cart.size(); i++){
@@ -45,7 +46,7 @@ public class CartItem {
         return false;
         
     }
-    
+    // The method refereshes the cart table in the user panel
     public void refreshCartTable(JTable table){
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
@@ -63,7 +64,7 @@ public class CartItem {
             model.addRow(row);
         }
     }
-    
+    // The method retrieves all the item in the cart
     public LinkedList<Cart> getAllItems(){
         return cart;
     }

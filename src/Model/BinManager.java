@@ -5,7 +5,8 @@
 package Model;
 
 /**
- *
+ * The class acts as the recycle bin for the deleted products where user cha
+ * perform operations such as delete and restore
  * @author ruzalrajopadhyay
  */
 
@@ -18,6 +19,7 @@ public class BinManager {
     private static Product[] stackArray = new Product[capacity];
     private static int top = -1;
     
+    // The method is used to push the product to the stack
     public static void push(Product product){
         if(product == null){
             return;
@@ -33,6 +35,7 @@ public class BinManager {
             stackArray[top] = product;
         }
     }
+    // The method is used to delete the product from the stack
     public static Product pop(){
         if(top == -1){
             return null;
@@ -43,6 +46,7 @@ public class BinManager {
         
         return topProduct;
     }
+    // The method updates the recycle bin Table
     public static void refreshBinTable(JTable table){
         if(table == null){
             return;
@@ -59,6 +63,8 @@ public class BinManager {
             model.addRow(row);
         }
     }
+    
+    // The method is used to restore the item to the inventory
     public static boolean restoreItem(ProductStored products, JTable mainTable, JTable binTable){
         Product itemToRestore = pop();
         if(itemToRestore == null){

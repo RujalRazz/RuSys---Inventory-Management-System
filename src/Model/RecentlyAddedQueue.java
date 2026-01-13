@@ -5,33 +5,36 @@
 package Model;
 
 /**
- *
+ * The method is used to store 5 recently added products and display it in the respective table
  * @author ruzalrajopadhyay
  */
 import java.time.LocalDate;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.util.ArrayList;
+
 public class RecentlyAddedQueue {
+    // Declaring the variables
     private static final int capacity = 5;
     private static Product[] addedQueue = new Product[capacity];
     private static int front = 0;
     private static int rear = -1;
     private static int currentSize = 0;
-    
+    // 
     public static void initializingTable(){
         front = 0;
         rear = -1;
         currentSize = 0;
         addedQueue = new Product[capacity];
         
+        // Filling up the eueue with existing values
         enqueue(new Product("P001", "MacBook Pro", "Electronics", 300000, 250, LocalDate.of(0, 1, 1)));
         enqueue(new Product("P002", "iPhone 15", "Electronics", 250000, 1200, LocalDate.of(0, 1, 1)));
         enqueue(new Product("P003", "Nike Air Max", "Shoes", 15000, 150, LocalDate.of(0, 1, 1)));
         enqueue(new Product("P004", "Organic Milk", "Food", 300, 10, LocalDate.of(2026, 2, 15)));
         enqueue(new Product("P005", "Bread", "Food", 200, 20, LocalDate.of(2026, 2, 20)));
     }
-    
+    // The method is used to add item to the queue
     public static void enqueue(Product product){
         if(product == null){
             return;
@@ -44,6 +47,7 @@ public class RecentlyAddedQueue {
         currentSize++;
     
     }
+    // The method is used to remove item from the queue
     public static Product dequeue(){
         if(currentSize == 0){
             return null;
@@ -54,6 +58,7 @@ public class RecentlyAddedQueue {
         currentSize--;
         return removed;
     }
+    // The method deletes the item from the queue if the product is deleted from the system
     public static void productDeletion(String productId){
         if(productId == null || currentSize == 0){
             return;
@@ -70,7 +75,7 @@ public class RecentlyAddedQueue {
             enqueue(p);
         }
     }
-    
+    // The method updates the table that stores queue
     public static void updateTable(JTable table){
         if(table == null){
             return;
