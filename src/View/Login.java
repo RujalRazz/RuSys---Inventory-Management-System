@@ -39,7 +39,6 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         message = new javax.swing.JLabel();
-        userIcon = new javax.swing.JLabel();
         adminMessage = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -64,9 +63,6 @@ public class Login extends javax.swing.JFrame {
         message.setText("Your Credentials To Continue Exploring!!!");
         jPanel1.add(message, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 320, -1));
 
-        userIcon.setText("User icon");
-        jPanel1.add(userIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, -1));
-
         adminMessage.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
 
         jLabel9.setText("We are here to minimize your efforts in inventory managing");
@@ -78,13 +74,14 @@ public class Login extends javax.swing.JFrame {
         adminMessageLayout.setHorizontalGroup(
             adminMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(adminMessageLayout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addComponent(jLabel9)
-                .addContainerGap(76, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminMessageLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel10)
-                .addGap(155, 155, 155))
+                .addGroup(adminMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(adminMessageLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel9))
+                    .addGroup(adminMessageLayout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(jLabel10)))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         adminMessageLayout.setVerticalGroup(
             adminMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +217,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel message;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel passwordLabel;
-    private javax.swing.JLabel userIcon;
     private javax.swing.JTextField username;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
