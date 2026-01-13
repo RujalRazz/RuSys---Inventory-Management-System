@@ -829,8 +829,14 @@ public class Admin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "The fields must not be empty", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            int idInt = Integer.parseInt(id);
             
-            
+            if(id.length() > 3){
+                JOptionPane.showMessageDialog(this, "The length of your product id can only be 3 characters long", "Warning"
+                , JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            id = id = "P" + String.format("%03d", idInt);
             for(Product p: productStored.getAllProducts()){
                 if(id.equalsIgnoreCase(p.getProductId())){
                     JOptionPane.showMessageDialog(this, "The product id already exists in the system, Choose another",
@@ -891,7 +897,7 @@ public class Admin extends javax.swing.JFrame {
             
         }  
         catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Please enter numeric data in quantity and price fields", "Warning",
+            JOptionPane.showMessageDialog(this, "Please enter numeric data in id, quantity, and price fields", "Warning",
                     JOptionPane.WARNING_MESSAGE);
         }
         catch(java.time.DateTimeException e){

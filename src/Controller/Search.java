@@ -11,6 +11,7 @@ package Controller;
 import Model.Product;
 import java.util.ArrayList;
 public class Search {
+    // Time Complexity: O(log n)
     public static Product binarySearchId(ArrayList<Product> products, String id){
             // Calling selectionSortId from sorting.java to sort the array as the searchig can only take place on sorted list.
             Sorting.selectionSortId(products);
