@@ -481,7 +481,8 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_logOutActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        cardLayout.show(jPanel2, "viewProduct");        // TODO add your handling code here:
+        cardLayout.show(jPanel2, "viewProduct");  
+        // TODO add your handling code here:
     }//GEN-LAST:event_viewActionPerformed
 
     private void idSearchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idSearchbtnActionPerformed
@@ -542,9 +543,15 @@ public class User extends javax.swing.JFrame {
                      JOptionPane.showMessageDialog(this, "Insufficient stock! Only " + foundProduct.getQuantity() + " available.",
                              "Insufficient Stock",JOptionPane.WARNING_MESSAGE);
                     return;
-            }
+            }     
                 Cart cartContent = new Cart(foundProduct, qty);
-                cartItem.addToCart(foundProduct, qty);
+                boolean success = cartItem.addToCart(foundProduct, qty);
+                if (!success){
+                    JOptionPane.showMessageDialog(this, foundProduct.getProductName() + " is already in cart.", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+                    return;
+                
+            }
                 cartItem.refreshCartTable(cartTable);
                 
                 idCart.setText("");
@@ -553,8 +560,10 @@ public class User extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, foundProduct.getProductName() + " added to cart.", "Success",
                         JOptionPane.INFORMATION_MESSAGE);
                 
-            }
             
+    
+            }
+    
             else {
             JOptionPane.showMessageDialog(this, "Product ID not found in inventory.", "Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -651,6 +660,10 @@ public class User extends javax.swing.JFrame {
                 searchItem();
             }
             });
+    }
+    public void refreshAllData() {
+        productStored.refreshTable(productList);
+        cartItem.refreshCartTable(cartTable);
     }
     /**
      * @param args the command line arguments

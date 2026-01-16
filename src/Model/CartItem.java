@@ -18,12 +18,16 @@ public class CartItem {
         cart = new LinkedList<Cart>();
     }
     // the method is used to add thd product to the cart
-    public void addToCart(Product product, int qty){
+    public boolean addToCart(Product product, int qty){
         boolean found = false;
         for(int i = 0; i < cart.size(); i++){
             Cart item = cart.get(i);
             if(item.getProduct().getProductId().equalsIgnoreCase(product.getProductId())){
-                item.setQuantity(item.getQuantity() + qty);
+                int newQuantity = item.getQuantity() + qty;
+                if(newQuantity > product.getQuantity()){
+                    return false;
+                }
+                item.setQuantity(newQuantity);
                 found = true;
                 break;
             }
@@ -31,7 +35,9 @@ public class CartItem {
         }
         if(!found){
             cart.add(new Cart(product, qty));
+           
         }
+        return true;
     }
     // The method is used to remove the item from the cart
     public boolean removeItem(String productId){

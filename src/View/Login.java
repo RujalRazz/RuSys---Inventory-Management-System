@@ -183,6 +183,7 @@ public class Login extends javax.swing.JFrame {
             userPage = new User(this);
             }
             userPage.setVisible(true);
+            userPage.refreshAllData();
             this.setVisible(false);
         }
         else{

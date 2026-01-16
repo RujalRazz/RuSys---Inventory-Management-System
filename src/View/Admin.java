@@ -943,15 +943,19 @@ public class Admin extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         String id = productId.getText().trim();
-        
-        
         if(id.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please make sure you have entered Id", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
         Product productToDelete = productStored.searchById(id);
-        if(productToDelete != null){
+        if(productToDelete == null){
+            JOptionPane.showMessageDialog(this, "Product Id not found. Please enter correct product id", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        
             int confirmation = JOptionPane.showConfirmDialog(this, "This process cannot be undone, Are you sure?",
                     "Confirm Delete", JOptionPane.YES_NO_OPTION);
             if(confirmation == JOptionPane.YES_OPTION){
@@ -971,10 +975,13 @@ public class Admin extends javax.swing.JFrame {
                     priceStr.setText("");
             }
                 else{
-                    JOptionPane.showMessageDialog(this, "Product Id not found. Please enter correct product id", "Warning",
+                    JOptionPane.showMessageDialog(this, "Failed to delete the product.", "Warning",
                             JOptionPane.WARNING_MESSAGE);
+            return;
                 }
-            }
+               
+            
+            
         }
         
         
